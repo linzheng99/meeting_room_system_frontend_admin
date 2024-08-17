@@ -30,7 +30,7 @@ export function Login() {
       localStorage.setItem('user_info', JSON.stringify(data.userInfo));
 
       setTimeout(() => {
-        navigate('/');
+        navigate('/user_manage');
       }, 1000);
     } else {
       message.error(data || '系统繁忙，请稍后再试');

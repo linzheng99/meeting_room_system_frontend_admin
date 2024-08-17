@@ -1,7 +1,9 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Menu as AntdMenu, MenuProps } from 'antd';
 import './menu.css';
 import { useCallback } from 'react';
+import { router } from '../..';
+import { MenuClickEventHandler } from 'rc-menu/lib/interface';
 
 const items: MenuProps['items'] = [
   {
@@ -13,7 +15,7 @@ const items: MenuProps['items'] = [
     label: "预定管理"
   },
   {
-    key: 'user_manage',
+    key: '3',
     label: "用户管理"
   },
   {
@@ -22,18 +24,21 @@ const items: MenuProps['items'] = [
   }
 ];
 
+const handleMenuItemClick: MenuClickEventHandler = (info) => {
+  if (info.key === '3') {
+    router.navigate('/user_manage')
+  }
+}
+
 
 export function Menu() {
-  const navigate = useNavigate();
-  const onClick = useCallback(({ key }: { key: string }) => {
-    navigate('/' + key)
-  }, [])
+  const location = useLocation()
 
   return <div id="menu-container">
     <div className="menu-area">
       <AntdMenu
-        onClick={onClick}
-        defaultSelectedKeys={['3']}
+        defaultSelectedKeys={(location.pathname === '/user_manage') ? ['3'] : ['1']}
+        onClick={handleMenuItemClick}
         items={items}
       />
     </div>
