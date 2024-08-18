@@ -25,19 +25,48 @@ const items: MenuProps['items'] = [
 ];
 
 const handleMenuItemClick: MenuClickEventHandler = (info) => {
-  if (info.key === '3') {
-    router.navigate('/user_manage')
+  let path = '';
+  switch (info.key) {
+    case '1':
+      path = '/meeting_room_manage';
+      break;
+    case '2':
+      path = '/booking_manage';
+      break;
+    case '3':
+      path = '/user_manage';
+      break;
+    case '4':
+      path = '/statistics';
+      break;
   }
+  router.navigate(path);
 }
 
 
+
+
 export function Menu() {
-  const location = useLocation()
+  const location = useLocation();
+
+  function getSelectedKeys() {
+    if (location.pathname === '/user_manage') {
+      return ['3']
+    } else if (location.pathname === '/booking_manage') {
+      return ['2']
+    } else if (location.pathname === '/meeting_room_manage') {
+      return ['1']
+    } else if (location.pathname === '/statistics') {
+      return ['4']
+    } else {
+      return ['1']
+    }
+  }
 
   return <div id="menu-container">
     <div className="menu-area">
       <AntdMenu
-        defaultSelectedKeys={(location.pathname === '/user_manage') ? ['3'] : ['1']}
+        defaultSelectedKeys={getSelectedKeys()}
         onClick={handleMenuItemClick}
         items={items}
       />
